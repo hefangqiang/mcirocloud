@@ -1,0 +1,20 @@
+# 端口信息
+server:
+  port: 8080
+  servlet:
+    context-path: /consumer
+
+spring:
+  #应用名
+  application:
+    name: consumer
+
+eureka:
+  client:
+    register-with-eureka: false     # 不注册到eureka服务注册中心
+    fetch-registry: true    # 拉取注册中心服务列表
+    service-url:
+      defaultZone: http://user:123456@eureka1:10001/eureka/,http://user:123456@eureka2:10002/eureka/,http://user:123456@eureka3:10003/eureka/
+
+
+

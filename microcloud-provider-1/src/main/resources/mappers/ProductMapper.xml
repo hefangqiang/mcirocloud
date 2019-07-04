@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hfq.provider.dao.ProductMapper">
+  
+  <resultMap id="BaseResultMap" type="com.hfq.api.model.Product">
+    <id column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_detail" jdbcType="VARCHAR" property="productDetail" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    product_id, product_name, product_detail
+  </sql>
+  
+  <select id="selectAllProduct" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from sc_product
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sc_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sc_product
+    where product_id = #{productId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.hfq.api.model.Product" useGeneratedKeys="true" keyProperty="product_id">
+    insert into sc_product ( product_name, product_detail )
+    values ( #{productName,jdbcType=VARCHAR}, #{productDetail,jdbcType=VARCHAR})
+  </insert>
+
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.hfq.api.model.Product">
+    update sc_product
+    <set>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDetail != null">
+        product_detail = #{productDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.hfq.api.model.Product">
+    update sc_product
+    set product_name = #{productName,jdbcType=VARCHAR},
+      product_detail = #{productDetail,jdbcType=VARCHAR}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

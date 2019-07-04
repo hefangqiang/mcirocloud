@@ -1,0 +1,56 @@
+
+server:
+  port: 8083
+  servlet:
+    context-path: /provider
+
+spring:
+  # 应用名 一定要加 不然消费方找不到服务方
+  application:
+    name: product-provider
+
+  # 数据源
+  datasource:
+    url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+    # 连接池druid
+    druid:
+      initial-size: 10    # 初始化连接数
+      min-idle: 10        # 最小连接
+      max-active: 200     # 最大连接数
+      min-evictable-idle-time-millis: 180000    # 连接最小存活时间ms
+      testOnBorrow: false       # 申请连接时检查连接是否有效,影响性能设置 建议 false
+      testWhileIdle: true       # 空闲时间大于配置的连接间隔时间,才会检测连接是否有效,保证安全,不影响性能,建议true
+      removeAbandoned: true     # 建立时间超过removeAbandonedTimeout的连接,是否强制关闭
+      remove-abandoned-timeout: 180   # 秒
+      log-abandoned: true         # 发生removeAbandoned的时候,是否记录当前线程的堆栈信息到日志中
+#      filters: stat,wall,log4j    # 配置监控统计拦截的filters,监控统计,日志,防御sql注入
+
+# mybatis
+mybatis:
+  mapper-locations: classpath:mappers/*.xml  # mapXML文件位置
+
+# logback日志
+logging:
+  config: classpath:log/logback.xml
+
+# 服务注册到 eureka
+eureka:
+  instance:
+    prefer-ip-address: true  # 否优先使用IP地址作为主机名的标识
+    instance-id: product-provider-three  # 注册到eureka上的唯一实例ID  status
+    lease-renewal-interval-in-seconds: 2      # 设置心跳的时间间隔（默认是30秒）
+    lease-expiration-duration-in-seconds: 5     # 如果现在超过了5秒的间隔（默认是90秒）
+  client:
+    register-with-eureka: true    #注册到eureka服务中心
+    service-url:
+      defaultZone: http://user:123456@eureka1:10001/eureka/,http://user:123456@eureka2:10002/eureka/,http://user:123456@eureka3:10003/eureka/
+
+
+# 健康监控参数
+info:
+  app.name: product-provider
+  company.name: hfq
+  build.artifactId: $project.artifactId$
+  build.modelVersion: $project.modelVersion$
