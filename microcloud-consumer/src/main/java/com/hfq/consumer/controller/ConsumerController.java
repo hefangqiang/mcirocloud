@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.annotation.Resource;
 
 /**
- * @description： 消费方controller
+ * @description： 消费方controller restTemplate
  * @author： Mr.He
  * @date： 2019-06-30 14:32
  **/
